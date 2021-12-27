@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
+import 'bootswatch/dist/cyborg/bootstrap.min.css'
 import './App.css';
  
 const App = props => {

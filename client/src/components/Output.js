@@ -10,7 +10,7 @@ const Output = props => {
     return (
         <div>
             {
-                layers.map(layer => <Component layer={layer} component={taco[layer]} />)
+                layers.map(layer => <Component key={layer._id} layer={layer} component={taco[layer]} />)
             }
         </div>
     )
