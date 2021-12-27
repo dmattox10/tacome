@@ -1,8 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
-import logo from './logo.svg';
-import increment, { incrementAsync, decrement } from './actions';
-import Counter from './Counter';
 import './App.css';
  
 const App = props => {
@@ -32,7 +29,9 @@ const mapStateToProps = state => {
   return {
     fetching: state.fetching,
     taco: state.taco,
-    error: state.error
+    error: state.error,
+    currentPage: state.currentPage,
+    navLinks: state.navlinks
   };
 };
 
