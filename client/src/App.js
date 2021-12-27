@@ -1,71 +1,46 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 import logo from './logo.svg';
 import increment, { incrementAsync, decrement } from './actions';
 import Counter from './Counter';
 import './App.css';
-
-function App() {
+ 
+const App = props => {
   const dispatch = useDispatch();
-  const counter = useSelector(state => state.count)
-
+  // const taco = useSelector(state => state.taco)
+  const { fetching, taco, error } = props
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter
-          value={counter}
-          onIncrement={() => dispatch(increment())}
-          onDecrement={() => dispatch(decrement())}
-          onIncrementAsync={() => dispatch(incrementAsync())}
-        />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <div>
-          Learn
-          {" "}
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          React,
-          </a>
-          {" "}
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          Redux,
-          </a>
-          {" "}
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          React Redux
-          </a>
-          {" "}
-          and
-          {" "}
-          <a
-            className="App-link"
-            href="https://redux-saga.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          Redux Saga
-          </a>
-        </div>
-      </header>
+      {taco.category === full_tacos ? 
+      <Taco
+        taco={taco}
+        onUpVote={() => dispatch(upVote(taco))}
+        onDownVote={() => dispatch(downVote(taco))}
+      />
+    :
+      <Full
+        taco={taco}
+        onUpVote={() => dispatch(upVote(taco))}
+        onDownVote={() => dispatch(downVote(taco))}
+      />
+      }
+       
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    fetching: state.fetching,
+    taco: state.taco,
+    error: state.error
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestRandom: () => dispatch({ type: 'GET_RANDOM' })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,4 +1,4 @@
-import types from './types';
+import types from './types'
 
 const increment = () => ({
   type: types.INCREMENT,
@@ -12,4 +12,23 @@ export const incrementAsync = error => ({
   type: types.INCREMENT_ASYNC,
 });
 
-export default increment;
+const getRandom = () => ({
+  type: types.GET_RANDOM,
+})
+
+export const getComplete = (data) => ({
+  type: types.GET_COMPLETE,
+  data
+})
+
+export const getCustom = (error) => ({
+  type: types.GET_CUSTOM,
+})
+
+export const getFull = (error) => ({
+  type: types.GET_FULL,
+})
+
+
+
+export default getRandom;
