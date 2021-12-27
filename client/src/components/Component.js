@@ -1,3 +1,5 @@
+import { Card, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
+
 const Component = props => {
 
     const { _id, category, name, html } = props 

@@ -6,7 +6,7 @@ const GET_CUSTOM = 'GET_CUSTOM'
 const POST_FULL = 'POST_FULL'
 const POST_CUSTOM = 'POST_CUSTOM'
 
-export default {
+export {
   CAPABILITIES,
   GET_RANDOM,
   GET_FULL,

@@ -1,5 +1,6 @@
-import {} from 'reactstrap'
+import { Card, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
 import { connect } from 'react-redux'
+import Component from './Component'
 
 const Output = props => {
 

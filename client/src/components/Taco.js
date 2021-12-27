@@ -1,13 +1,16 @@
 import { CustomInput, Card, CardBody, CardTitle, CardSubtitle, CardText, CardLink, Container, Row, Col, Form, FormGroup, Label, FormFeedback, Input, Button, Modal, ModalHeader, ModalBody, CardHeader } from 'reactstrap'
 import { useState } from 'react'
-import { useFormik } from 'formik'
+import { useFormik, Field } from 'formik'
 import * as Yup from 'yup'
 import Output from './Output'
+import { connect } from 'react-redux'
 
 const Custom = props => {
 
-    const { onPostCustom, taco, error, fetching } = props
-
+    const { onPostCustom, taco, error, fetching, onGetRandom, random } = props
+    if (random) {
+        onGetRandom()
+    }
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -108,7 +111,7 @@ const Custom = props => {
                 </div>
                 <div className='spacer'>
                     <Row>
-                        {formError ? <span className='invalid-feedback'>{ formError.message }</span> : <span>&nbsp;</span>}
+                        {error ? <span className='invalid-feedback'>{ error.message }</span> : <span>&nbsp;</span>}
                     </Row>
                 </div>
             </Form>
@@ -126,7 +129,8 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
-      onPostCustom: () => dispatch({ type: 'POST_CUSTOM' })
+      onPostCustom: () => dispatch({ type: 'POST_CUSTOM' }),
+      onGetRandom: () => dispatch({ type: 'GET_RANDOM' })
     };
   };
   

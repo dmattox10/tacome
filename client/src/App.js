@@ -2,27 +2,36 @@ import React from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import 'bootswatch/dist/cyborg/bootstrap.min.css'
 import './App.css'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router'
 import Welcome from './components/Welcome'
 import Taco from './components/Taco'
 import Full from './components/Full'
 import Custom from './components/Custom'
+import Navigation from './components/Navigation'
 import { Container } from 'reactstrap';
- 
+import { useNavigate } from 'react-router-dom'
+
 const App = props => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   // const taco = useSelector(state => state.taco)
-  const { fetching, taco, error } = props
+  const { fetching, taco, error, currentPage, navLinks, onRequestRandom } = props
+  console.log(navLinks)
+  if (!taco) {
+    onRequestRandom()
+    // navigate('/')
+  }
   return (
     <div className="App">
       <Navigation currentPage={currentPage} navLinks={navLinks} />
       <Container>
-        <Switch>
-          <Route exact path='/' component={Welcome} />
-          <Route path='/Taco' component={Taco} />
-          <Route path='/Custom' component={Custom} />
-          <Route path='/Full' component={Full} />
-        </Switch>
+        <Routes>
+          <Route exact path='/' element={<Taco/>} />
+          <Route path='/Taco' element={<Taco/>} />
+          <Route path='/Custom' element={<Custom/>} />
+          <Route path='/Full' element={<Full/>} />
+          <Route path='/Random' random={true} element={<Taco/>} />
+        </Routes>
       </Container>
     </div>
   );
@@ -34,7 +43,7 @@ const mapStateToProps = state => {
     taco: state.taco,
     error: state.error,
     currentPage: state.currentPage,
-    navLinks: state.navlinks
+    navLinks: state.navLinks
   };
 };
 

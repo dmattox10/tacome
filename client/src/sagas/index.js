@@ -1,7 +1,8 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import axios from "axios";
+import axios from "axios"
 
 const baseURL = process.env.REACT_APP_BASE_URL || 'https://tacotaco.danielmattox.com/taco'
+// const navigate = useNavigate()
 
 // watcher saga: watches for actions dispatched to the store, starts worker saga
 export function* watcherSaga() {
@@ -11,14 +12,6 @@ export function* watcherSaga() {
   yield takeLatest('GET_COMPLETE', completeSaga)
   yield takeLatest('POST_CUSTOM', postCustomSaga)
   yield takeLatest('POST_FULL', postFullSaga)
-}
-
-// function that makes the api request and returns a Promise for response
-function fetchDog() {
-  return axios({
-    method: "get",
-    url: "https://dog.ceo/api/breeds/image/rCustom"
-  });
 }
 
 function fetchRandom() {
@@ -34,6 +27,7 @@ function* randomSaga() {
     const taco = response.data.taco
 
     yield put ({ type: 'API_CALL_SUCCESS', taco })
+    // navigate('/Taco')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
   }
@@ -50,12 +44,13 @@ function fetchCustom(data) {
   })
 }
 
-function* customSaga() {// may need action as parameter
+function* customSaga(action) {// may need action as parameter
   try {
     const response = yield call(fetchCustom, action.data)
     const taco = response.data.taco
 
     yield put ({ type: 'API_CALL_SUCCESS', taco })
+    // navigate('/Taco')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
   }
@@ -72,12 +67,13 @@ function fetchComplete(id=null) {
   })
 }
 
-function* completeSaga() {// may need action as parameter
+function* completeSaga(action) {// may need action as parameter
   try {
     const response = yield call(fetchComplete, action.id)
     const taco = response.data.taco
 
     yield put ({ type: 'API_CALL_SUCCESS', taco })
+    // navigate('/Taco')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
   }
@@ -94,12 +90,13 @@ function fetchFull(id=null) {
   })
 }
 
-function* fullSaga() {// may need action as parameter
+function* fullSaga(action) {// may need action as parameter
   try {
     const response = yield call(fetchFull, action.id)
     const taco = response.data.taco
 
     yield put ({ type: 'API_CALL_SUCCESS', taco })
+    // navigate('/Full')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
   }
@@ -113,12 +110,13 @@ function postFull(data) {
   })
 }
 
-function* postFullSaga() {// may need action as parameter
+function* postFullSaga(action) {// may need action as parameter
   try {
     const response = yield call(postFull, action.data)
     const taco = response.data.taco
 
     yield put ({ type: 'API_CALL_SUCCESS', taco })
+    // navigate('/Full')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
   }
@@ -132,12 +130,13 @@ function postCustom(data) {
   })
 }
 
-function* postCustomSaga() {// may need action as parameter
+function* postCustomSaga(action) {// may need action as parameter
   try {
     const response = yield call(postCustom, action.data)
     const taco = response.data.taco
 
     yield put ({ type: 'API_CALL_SUCCESS', taco })
+    // navigate('/Taco')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
   }

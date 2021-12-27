@@ -1,6 +1,4 @@
-import { combineReducers } from 'redux';
 import { CAPABILITIES, GET_RANDOM, GET_FULL, GET_COMPLETE, GET_CUSTOM, POST_FULL, POST_CUSTOM } from '../actions/types'
-
 // reducer with initial state
 const initialState = {
   fetching: false,
@@ -8,10 +6,10 @@ const initialState = {
   error: null,
   capabilities: null,
   currentPage: 'Random',
-  navLinks: ['Random, Custom, Full, Complete']
+  navLinks: ['Random', 'Custom', 'Full', 'Complete']
 }
 
-export function reducer(state = initialState, action) {
+export function tacoReducer(state = initialState, action) {
   switch (action.type) {
     case CAPABILITIES:
       return { ...state, fetching: true, error: action.error, capabilities: action.capabilities }
@@ -31,3 +29,4 @@ export function reducer(state = initialState, action) {
       return state
   }
 }
+

@@ -1,7 +1,8 @@
-import { IndexLink, Link } from 'react-router-dom'
-import { Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, NavbarText } from 'reactstrap'
+import { NavLink, Link } from 'react-router-dom'
+import { Navbar, NavbarBrand, NavbarToggler, NavItem, NavbarText, Collapse, Nav } from 'reactstrap'
 import ComputedLink from './ComputedLink'
 import { useState } from 'react'
+import { connect } from 'react-redux'
 
 const Navigation = props => {
 
@@ -11,7 +12,6 @@ const Navigation = props => {
         currentPage, navLinks
     } = props
     const filteredLinks = navLinks.filter(navlink => navlink !== currentPage)
-
     const updateToggle = () => {
         setToggle(prevState => !prevState)
     }
@@ -22,18 +22,17 @@ const Navigation = props => {
                 dark
                 expand="md"
                 fixed="top"
-                full
             >
-                <IndexLink href="/">
+                <NavLink to="/">
                     TacoMe!
-                </IndexLink>
+                </NavLink>
                 <NavbarToggler onClick={() => updateToggle()} />
                 <Collapse isOpen={toggle} navbar>
                     <Nav
                         className="me-auto"
                         navbar
                     >
-                        {filteredLinks.map(link => <ComputedLink text={link}/>)}
+                        {filteredLinks.map(link => <ComputedLink key={link} text={link}/>)}
                     </Nav>
                     <NavbarText>
                         { currentPage }
@@ -47,7 +46,7 @@ const Navigation = props => {
 const mapStateToProps = state => {
     return {
       currentPage: state.currentPage,
-      navLinks: state.navlinks
+      navLinks: state.navLinks
     };
   };
   
