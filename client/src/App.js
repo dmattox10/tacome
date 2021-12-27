@@ -24,7 +24,6 @@ const App = props => {
         onDownVote={() => dispatch(downVote(taco))}
       />
       }
-       
     </div>
   );
 }

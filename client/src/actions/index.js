@@ -29,6 +29,14 @@ export const getFull = (error) => ({
   type: types.GET_FULL,
 })
 
+export const postFull = (data) => ({
+  type: types.POST_FULL,
+  data
+})
 
+export const postCustom = (data) => ({
+  type: types.POST_CUSTOM,
+  data
+})
 
 export default getRandom;

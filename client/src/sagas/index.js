@@ -9,6 +9,8 @@ export function* watcherSaga() {
   yield takeLatest('GET_CUSTOM', customSaga)
   yield takeLatest('GET_FULL', fullSaga)
   yield takeLatest('GET_COMPLETE', completeSaga)
+  yield takeLatest('POST_CUSTOM', postCustomSaga)
+  yield takeLatest('POST_FULL', postFullSaga)
 }
 
 // function that makes the api request and returns a Promise for response
@@ -95,6 +97,44 @@ function fetchFull(id=null) {
 function* fullSaga() {// may need action as parameter
   try {
     const response = yield call(fetchFull, action.id)
+    const taco = response.data.taco
+
+    yield put ({ type: 'API_CALL_SUCCESS', taco })
+  } catch (error) {
+    yield put ({ type: 'API_CALL_FAILURE', error })
+  }
+}
+
+function postFull(data) {
+  return axios({
+    method: 'post',
+    url: `${baseURL}/full`,
+    data: data
+  })
+}
+
+function* postFullSaga() {// may need action as parameter
+  try {
+    const response = yield call(postFull, action.data)
+    const taco = response.data.taco
+
+    yield put ({ type: 'API_CALL_SUCCESS', taco })
+  } catch (error) {
+    yield put ({ type: 'API_CALL_FAILURE', error })
+  }
+}
+
+function postCustom(data) {
+  return axios({
+    method: 'post',
+    url: `${baseURL}/custom`,
+    data: data
+  })
+}
+
+function* postCustomSaga() {// may need action as parameter
+  try {
+    const response = yield call(postCustom, action.data)
     const taco = response.data.taco
 
     yield put ({ type: 'API_CALL_SUCCESS', taco })
