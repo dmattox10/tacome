@@ -1,12 +1,14 @@
-import { CustomInput, Card, CardBody, CardTitle, CardSubtitle, CardText, CardLink, Container, Row, Col, Form, FormGroup, Label, FormFeedback, Input, Button, Modal, ModalHeader, ModalBody, CardHeader } from 'reactstrap'
-import { useState } from 'react'
-import { useFormik, Field } from 'formik'
+import { Row, Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { connect } from 'react-redux'
+import { Navigate } from 'react-router-dom'
+
+import Taco from './Taco'
 
 const Custom = props => {
 
-    const { onPostCustom } = props
+    const { onPostCustom, taco } = props
 
     const formik = useFormik({
         initialValues: {
@@ -79,119 +81,143 @@ const Custom = props => {
     //     );
     //   }
 
+    const CustomForm = (
+        <Form onSubmit={formik.handleSubmit}>
+            <Row>
+                <FormGroup>
+                    <Label for='shells'> How many shells? <span className='required'>*</span></Label>
+                    <Input
+                        id='shells'
+                        name='shells'
+                        type='number'
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.shells}
+                        className={ !formik.errors.shells ? 'form-control is-valid' : 'form-control is-invalid' }
+                    />
+                    { formik.errors.shells ? <span className='invalid-feedback'>{ formik.errors.shells }</span> : <span>&nbsp;</span>}
+                </FormGroup>
+            </Row>
+            <Row>
+                <FormGroup>
+                    <Label for='baseLayers'> How many base layers? <span className='required'>*</span></Label>
+                    <Input
+                        id='baseLayers'
+                        name='baseLayers'
+                        type='number'
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.baseLayers}
+                        className={ !formik.errors.baseLayers ? 'form-control is-valid' : 'form-control is-invalid' }
+                    />
+                    { formik.errors.baseLayers ? <span className='invalid-feedback'>{ formik.errors.baseLayers }</span> : <span>&nbsp;</span>}
+                </FormGroup>
+            </Row>
+            <Row>
+                <FormGroup>
+                    <Label for='seasonings'> How many seasonings? <span className='required'>*</span></Label>
+                    <Input
+                        id='seasonings'
+                        name='seasonings'
+                        type='number'
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.seasonings}
+                        className={ !formik.errors.seasonings ? 'form-control is-valid' : 'form-control is-invalid' }
+                    />
+                    { formik.errors.seasonings ? <span className='invalid-feedback'>{ formik.errors.seasonings }</span> : <span>&nbsp;</span>}
+                </FormGroup>
+            </Row>
+            <Row>
+                <FormGroup>
+                    <Label for='mixins'> How many mixins? <span className='required'>*</span></Label>
+                    <Input
+                        id='mixins'
+                        name='mixins'
+                        type='number'
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.mixins}
+                        className={ !formik.errors.mixins ? 'form-control is-valid' : 'form-control is-invalid' }
+                    />
+                    { formik.errors.mixins ? <span className='invalid-feedback'>{ formik.errors.mixins }</span> : <span>&nbsp;</span>}
+                </FormGroup>
+            </Row>
+            <Row>
+                <FormGroup>
+                    <Label for='condiments'> How many condiments? <span className='required'>*</span></Label>
+                    <Input
+                        id='condiments'
+                        name='condiments'
+                        type='number'
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.condiments}
+                        className={ !formik.errors.condiments ? 'form-control is-valid' : 'form-control is-invalid' }
+                    />
+                    { formik.errors.condiments ? <span className='invalid-feedback'>{ formik.errors.condiments }</span> : <span>&nbsp;</span>}
+                </FormGroup>
+            </Row>
+            {/* <Row>
+                <Col xs='6'>
+                    <Checkbox name="votes" value="false" />
+                </Col>
+                <Col xs='6'>
+                    <Checkbox name="votes" value="true" />   
+                </Col>
+            </Row> */}
+            <div className='spacer'>
+                <Row>
+                    <Button type='submit' style={{width: '100%'}} className='btn-success'>Submit</Button>
+                </Row>
+            </div>
+            {/* <div className='spacer'>
+                <Row>
+                    {error ? <span className='invalid-feedback'>{ error.message }</span> : <span>&nbsp;</span>}
+                </Row>
+            </div> */}
+        </Form>
+    )
+    
     return (
         <div className='spacer'>
-            <Form onSubmit={formik.handleSubmit}>
-                <Row>
-                    <FormGroup>
-                        <Label for='shells'> How many shells? <span className='required'>*</span></Label>
-                        <Input
-                            id='shells'
-                            name='shells'
-                            type='number'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.shells}
-                            className={ !formik.errors.shells ? 'form-control is-valid' : 'form-control is-invalid' }
-                        />
-                        { formik.errors.shells ? <span className='invalid-feedback'>{ formik.errors.shells }</span> : <span>&nbsp;</span>}
-                    </FormGroup>
-                </Row>
-                <Row>
-                    <FormGroup>
-                        <Label for='baseLayers'> How many base layers? <span className='required'>*</span></Label>
-                        <Input
-                            id='baseLayers'
-                            name='baseLayers'
-                            type='baseLayers'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.baseLayers}
-                            className={ !formik.errors.baseLayers ? 'form-control is-valid' : 'form-control is-invalid' }
-                        />
-                        { formik.errors.baseLayers ? <span className='invalid-feedback'>{ formik.errors.baseLayers }</span> : <span>&nbsp;</span>}
-                    </FormGroup>
-                </Row>
-                <Row>
-                    <FormGroup>
-                        <Label for='seasonings'> How many seasonings? <span className='required'>*</span></Label>
-                        <Input
-                            id='seasonings'
-                            name='seasonings'
-                            type='seasonings'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.seasonings}
-                            className={ !formik.errors.seasonings ? 'form-control is-valid' : 'form-control is-invalid' }
-                        />
-                        { formik.errors.seasonings ? <span className='invalid-feedback'>{ formik.errors.seasonings }</span> : <span>&nbsp;</span>}
-                    </FormGroup>
-                </Row>
-                <Row>
-                    <FormGroup>
-                        <Label for='mixins'> How many mixins? <span className='required'>*</span></Label>
-                        <Input
-                            id='mixins'
-                            name='mixins'
-                            type='mixins'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.mixins}
-                            className={ !formik.errors.mixins ? 'form-control is-valid' : 'form-control is-invalid' }
-                        />
-                        { formik.errors.mixins ? <span className='invalid-feedback'>{ formik.errors.mixins }</span> : <span>&nbsp;</span>}
-                    </FormGroup>
-                </Row>
-                <Row>
-                    <FormGroup>
-                        <Label for='condiments'> How many condiments? <span className='required'>*</span></Label>
-                        <Input
-                            id='condiments'
-                            name='condiments'
-                            type='condiments'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.condiments}
-                            className={ !formik.errors.condiments ? 'form-control is-valid' : 'form-control is-invalid' }
-                        />
-                        { formik.errors.condiments ? <span className='invalid-feedback'>{ formik.errors.condiments }</span> : <span>&nbsp;</span>}
-                    </FormGroup>
-                </Row>
-                {/* <Row>
-                    <Col xs='6'>
-                        <Checkbox name="votes" value="false" />
-                    </Col>
-                    <Col xs='6'>
-                        <Checkbox name="votes" value="true" />   
-                    </Col>
-                </Row> */}
-                <div className='spacer'>
-                    <Row>
-                        <Button type='submit' style={{width: '100%'}} className='btn-success'>Submit</Button>
-                    </Row>
-                </div>
-                {/* <div className='spacer'>
-                    <Row>
-                        {error ? <span className='invalid-feedback'>{ error.message }</span> : <span>&nbsp;</span>}
-                    </Row>
-                </div> */}
-            </Form>
+            {
+                taco ? <Taco taco={ taco } /> : CustomForm
+            }     
         </div>
     )
 }
 
-// const mapStateToProps = state => {
-//     return {
-//       fetching: state.fetching,
-//       taco: state.taco,
-//       error: state.error
-//     };
-//   };
-  
-  const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
     return {
-      onPostCustom: () => dispatch({ type: 'POST_CUSTOM' })
+      fetching: state.fetching,
+      taco: state.taco,
+      error: state.error
     };
   };
   
-  export default connect( mapDispatchToProps)(Custom);
+//   const mapDispatchToProps = dispatch => {
+//     return {
+//       onPostCustom: () => dispatch({ type: 'POST_CUSTOM', payload: postCustom.data })
+//     };
+//   };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      onPostCustom: (values) => { 
+        dispatch({ type: 'GET_CUSTOM', payload: values });
+        dispatch({ type: 'UPDATE_PATH', payload: 'Custom' })
+      }
+    }
+  }
+//   const mapStateToProps = (state) => null;
+
+  export default connect(mapStateToProps, mapDispatchToProps)(Custom);
+
+
+
+
+
+
+
+//   export default connect(mapStateToProps, mapDispatchToProps)(SliderComponent);

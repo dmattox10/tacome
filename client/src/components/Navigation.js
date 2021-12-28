@@ -1,5 +1,5 @@
-import { NavLink, Link } from 'react-router-dom'
-import { Navbar, NavbarBrand, NavbarToggler, NavItem, NavbarText, Collapse, Nav } from 'reactstrap'
+// import { Link } from 'react-router-dom'
+import { Navbar, NavbarBrand, NavbarToggler, NavbarText, Collapse, Nav } from 'reactstrap'
 import ComputedLink from './ComputedLink'
 import { useState } from 'react'
 import { connect } from 'react-redux'
@@ -21,22 +21,21 @@ const Navigation = props => {
                 color="dark"
                 dark
                 expand="md"
-                fixed="top"
             >
-                <NavLink to="/">
+                <NavbarBrand href="/">
                     TacoMe!
-                </NavLink>
+                </NavbarBrand>
                 <NavbarToggler onClick={() => updateToggle()} />
                 <Collapse isOpen={toggle} navbar>
                     <Nav
                         className="me-auto"
                         navbar
                     >
-                        {filteredLinks.map(link => <ComputedLink key={link} text={link}/>)}
+                        {navLinks.map(link => <ComputedLink key={link} text={link}/>)}
                     </Nav>
-                    <NavbarText>
+                    {/* <NavbarText>
                         { currentPage }
-                    </NavbarText>
+                    </NavbarText> */}
                 </Collapse>
             </Navbar>
         </div>
@@ -56,4 +55,4 @@ const mapStateToProps = state => {
     };
   };
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+  export default connect(mapStateToProps, mapDispatchToProps)(Navigation)

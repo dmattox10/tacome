@@ -1,16 +1,22 @@
-import { CustomInput, Card, CardBody, CardTitle, CardSubtitle, CardText, CardLink, Container, Row, Col, Form, FormGroup, Label, FormFeedback, Input, Button, Modal, ModalHeader, ModalBody, CardHeader } from 'reactstrap'
-import { useState } from 'react'
-import { useFormik, Field, Formik } from 'formik'
-import * as Yup from 'yup'
+import { Row, Col, FormGroup, Button } from 'reactstrap'
+import { useEffect } from 'react'
+import { Field, Formik } from 'formik'
+// import * as Yup from 'yup'
 import Output from './Output'
 import { connect } from 'react-redux'
+import Loading from './Loading'
 
-const Custom = props => {
+const Taco = props => {
 
     const { onPostCustom, taco, error, fetching, onGetRandom, random } = props
-    if (random || !taco) {
-        onGetRandom()
-    }
+    console.log(taco, fetching)  
+
+    // useEffect(() => {
+    //     if (random || !taco) {
+    //         onGetRandom()
+    //     }
+    // })
+    
     // const formik = useFormik({
     //     initialValues: {
     //         name: '',
@@ -87,42 +93,55 @@ const Custom = props => {
         );
       }
 
+    const Form = (
+        <Formik
+        initialValues={{ name: '',
+        votes: [] }}
+        onSubmit={values => onPostCustom(values)}
+      >
+        {formik => (
+          <div>
+              <Row>
+                      <FormGroup>
+                          {/* { taco.name ? TacoName : '' } */}
+                      </FormGroup> 
+                  </Row>   
+                  <Output taco={ taco } />    
+                  <Row>
+                      <Col xs='6'>
+                          <Checkbox name="votes" value="false" />
+                      </Col>
+                      <Col xs='6'>
+                          <Checkbox name="votes" value="true" />   
+                      </Col>
+                  </Row>
+                  <div className='spacer'>
+                      <Row>
+                          <Button type='submit' style={{width: '100%'}} className='btn-success'>Submit</Button>
+                      </Row>
+                  </div>
+                  <div className='spacer'>
+                      <Row>
+                          {error ? <span className='invalid-feedback'>{ error.message }</span> : <span>&nbsp;</span>}
+                      </Row>
+                  </div>
+          </div>
+        )}
+      </Formik>
+    )
+
+    const CryBaby = (
+        <div>
+            (U+2639)
+        </div>
+    )
       
     return (
-        <Formik
-      initialValues={{ name: '',
-      votes: [] }}
-      onSubmit={values => onPostCustom(values)}
-    >
-      {formik => (
         <div>
-            <Row>
-                    <FormGroup>
-                        {/* { taco.name ? TacoName : '' } */}
-                    </FormGroup> 
-                </Row>   
-                <Output />    
-                <Row>
-                    <Col xs='6'>
-                        <Checkbox name="votes" value="false" />
-                    </Col>
-                    <Col xs='6'>
-                        <Checkbox name="votes" value="true" />   
-                    </Col>
-                </Row>
-                <div className='spacer'>
-                    <Row>
-                        <Button type='submit' style={{width: '100%'}} className='btn-success'>Submit</Button>
-                    </Row>
-                </div>
-                <div className='spacer'>
-                    <Row>
-                        {error ? <span className='invalid-feedback'>{ error.message }</span> : <span>&nbsp;</span>}
-                    </Row>
-                </div>
+            {
+                taco ? Form : CryBaby
+            }
         </div>
-      )}
-    </Formik>
     )
 }
 
@@ -136,12 +155,12 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
-      onPostCustom: () => dispatch({ type: 'POST_CUSTOM' }),
+      onPostCustom: (values) => dispatch({ type: 'POST_CUSTOM', payload: values }),
       onGetRandom: () => dispatch({ type: 'GET_RANDOM' })
     };
   };
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Custom);
+  export default connect(mapStateToProps, mapDispatchToProps)(Taco) 
 
   /*
    <div className='spacer'>

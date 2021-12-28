@@ -2,7 +2,7 @@ import { Card, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
 
 const Component = props => {
 
-    const { _id, category, name, html } = props 
+    const { name, html } = props 
 
     return (
 
@@ -14,14 +14,8 @@ const Component = props => {
             >
                 <CardBody>
                     <CardTitle tag="h5">
-                        {category}
-                    </CardTitle>
-                    <CardSubtitle
-                        className="mb-2 text-muted"
-                        tag="h6"
-                    >
                         {name}
-                    </CardSubtitle>
+                    </CardTitle>
                     <CardText>
                         {html}
                     </CardText>

@@ -1,17 +1,15 @@
-import { NavItem } from 'reactstrap'
-import { Link } from 'react-router-dom'
+import { NavLink, NavItem } from 'reactstrap'
 
 const ComputedLink = props => {
 
     const { text } = props 
     return (
         <NavItem>
-            <Link to={`/${text}`}>
+            <NavLink href={`/${text}`}>
                 {text}
-            </Link>
+            </NavLink>
         </NavItem>
     )
-
 }
 
 export default ComputedLink

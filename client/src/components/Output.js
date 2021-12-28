@@ -1,28 +1,23 @@
-import { Card, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
-import { connect } from 'react-redux'
-import Component from './Component'
+import Layer from './Layer'
 
 const Output = props => {
 
-    const { taco, fetching } = props
-
-    const layers = ['condiments', 'mixins', 'seasonings', 'baseLayers', 'shells']
+    const { taco } = props
 
     return (
         <div>
             {
-                layers.map(layer => <Component key={layer._id} layer={layer} component={taco[layer]} />)
+                Object.entries(taco).map(([key, value]) => {
+                    if (key !== 'fullTacos') {
+                        console.log(key, value)
+                        return <Layer key={key[0]._id} layerKey={key} layerValue={value} />
+                    }
+                })
             }
         </div>
     )
+    
 }
 
-const mapStateToProps = state => {
-    return {
-      fetching: state.fetching,
-      taco: state.taco,
-      error: state.error
-    };
-  };
   
-  export default connect(mapStateToProps)(Output);
+  export default Output

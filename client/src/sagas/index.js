@@ -1,8 +1,8 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import axios from "axios"
-import { getCapabilities } from "../actions";
 
 const baseURL = process.env.REACT_APP_BASE_URL || 'https://tacotaco.danielmattox.com/taco'
+const bypassSecret = process.env.REACT_APP_BYPASS_SECRET || 'shhh'
 // const navigate = useNavigate()
 
 // watcher saga: watches for actions dispatched to the store, starts worker saga
@@ -27,8 +27,7 @@ function* randomSaga() {
   try {
     const response = yield call(fetchRandom)
     const taco = response.data.taco
-
-    yield put ({ type: 'API_CALL_SUCCESS', taco })
+    yield put ({ type: 'API_CALL_SUCCESS', payload: taco })
     // navigate('/Taco')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
@@ -48,10 +47,10 @@ function fetchCustom(data) {
 
 function* customSaga(action) {// may need action as parameter
   try {
-    const response = yield call(fetchCustom, action.data)
+    const response = yield call(fetchCustom, action.payload)
     const taco = response.data.taco
-
-    yield put ({ type: 'API_CALL_SUCCESS', taco })
+    console.log(taco)
+    yield put ({ type: 'API_CALL_SUCCESS', payload: taco })
     // navigate('/Taco')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
@@ -74,7 +73,7 @@ function* completeSaga(action) {// may need action as parameter
     const response = yield call(fetchComplete, action.id)
     const taco = response.data.taco
 
-    yield put ({ type: 'API_CALL_SUCCESS', taco })
+    yield put ({ type: 'API_CALL_SUCCESS', payload: taco })
     // navigate('/Taco')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
@@ -97,7 +96,7 @@ function* fullSaga(action) {// may need action as parameter
     const response = yield call(fetchFull, action.id)
     const taco = response.data.taco
 
-    yield put ({ type: 'API_CALL_SUCCESS', taco })
+    yield put ({ type: 'API_CALL_SUCCESS', payload: taco })
     // navigate('/Full')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
@@ -108,7 +107,10 @@ function postFull(data) {
   return axios({
     method: 'post',
     url: `${baseURL}/full`,
-    data: data
+    data: data,
+    headers: {
+      'x-auth-token': bypassSecret
+  },
   })
 }
 
@@ -117,7 +119,7 @@ function* postFullSaga(action) {// may need action as parameter
     const response = yield call(postFull, action.data)
     const taco = response.data.taco
 
-    yield put ({ type: 'API_CALL_SUCCESS', taco })
+    yield put ({ type: 'API_CALL_SUCCESS', payload: taco })
     // navigate('/Full')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
@@ -128,16 +130,19 @@ function postCustom(data) {
   return axios({
     method: 'post',
     url: `${baseURL}/custom`,
-    data: data
+    data: data,
+    headers: {
+      'x-auth-token': bypassSecret
+  },
   })
 }
 
 function* postCustomSaga(action) {// may need action as parameter
   try {
-    const response = yield call(postCustom, action.data)
+    const response = yield call(postCustom, action.payload)
     const taco = response.data.taco
-
-    yield put ({ type: 'API_CALL_SUCCESS', taco })
+    
+    yield put ({ type: 'API_CALL_SUCCESS', payload: taco })
     // navigate('/Taco')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
@@ -156,7 +161,7 @@ function* getCapSaga(action) {
     const response = yield call(getCap, action.data)
     const capabilities = response.data.capabilities
 
-    yield put ({ type: 'CAP_SUCCESS', capabilities})
+    yield put ({ type: 'CAP_SUCCESS', payload: capabilities})
   } catch (error)  {
     yield put ({ type: 'CAP_FAILURE', error})
   }

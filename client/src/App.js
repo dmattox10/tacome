@@ -1,47 +1,59 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import 'bootswatch/dist/cyborg/bootstrap.min.css'
 import './App.css'
 import { Route, Routes } from 'react-router'
-import Welcome from './components/Welcome'
 import Taco from './components/Taco'
 import Full from './components/Full'
+import Random from './components/Random'
 import Custom from './components/Custom'
 import Navigation from './components/Navigation'
 import { Container } from 'reactstrap';
-import { useNavigate } from 'react-router-dom'
 import Loading from './components/Loading'
 
 
 const App = props => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  // const dispatch = useDispatch()
+  // const navigate = useNavigate()
   // const taco = useSelector(state => state.taco)
-  const { fetching, taco, error, currentPage, navLinks, onRequestRandom, capabilities, onRequestCaps } = props
+  const { fetching, taco, currentPage, navLinks, onRequestRandom, capabilities, onRequestCaps } = props
   useEffect(() => {
     if (!capabilities) {
       onRequestCaps()
-      onRequestRandom()
     }
+    if (taco) {
+      console.log(taco)
+    }
+    // if (!taco) {
+    //   onRequestRandom()
+    // }
   }, [capabilities])
 
   const Ready = (
     <Container>
         <Routes>
-          <Route exact path='/' element={<Taco/>} />
-          <Route path='/Taco' element={<Taco/>} />
-          <Route path='/Custom' element={<Custom/>} />
-          <Route path='/Full' element={<Full/>} />
-          <Route path='/Random' random={true} element={<Taco/>} />
+          <Route path='/' element={<Random />} />
+          {/* <Route path='/Taco' element={<Taco />} /> */}
+          <Route path='/Custom' element={<Custom />} />
+          {/* <Route path='/Full' element={<Full />} /> */}
+          <Route path='/Random' element={<Random />} />
+          {/* <Route path='/Complete' element={<Complete />} /> */}
         </Routes>
       </Container>
   )
   return (
     <div className="App">
       <Navigation currentPage={currentPage} navLinks={navLinks} />
-      {
-        fetching ? <Loading /> : Ready
-      }
+      <Container className='show'>
+        <Routes>
+          <Route path='/' element={<Random />} />
+          {/* <Route path='/Taco' element={<Taco />} /> */}
+          <Route path='/Custom' element={<Custom />} />
+          {/* <Route path='/Full' element={<Full />} /> */}
+          <Route path='/Random' element={<Random />} />
+          {/* <Route path='/Complete' element={<Complete />} /> */}
+        </Routes>
+      </Container>
     </div>
   );
 }
@@ -59,7 +71,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onRequestRandom: () => dispatch({ type: 'GET_RANDOM' }),
     onRequestCaps: () => dispatch({ type: 'CAPABILITIES' })
   };
 };

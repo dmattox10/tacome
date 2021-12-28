@@ -4,31 +4,35 @@ const getRandom = () => ({
   type: types.GET_RANDOM,
 })
 
-export const getComplete = (data) => ({
+export const getComplete = () => ({
   type: types.GET_COMPLETE,
-  data
 })
 
-export const getCustom = (error) => ({
+export const getCustom = () => ({
   type: types.GET_CUSTOM,
 })
 
-export const getFull = (error) => ({
+export const getFull = () => ({
   type: types.GET_FULL,
 })
 
 export const postFull = (data) => ({
   type: types.POST_FULL,
-  data
+  payload: data
 })
 
 export const postCustom = (data) => ({
   type: types.POST_CUSTOM,
-  data
+  payload: data
 })
 
 export const getCapabilities = () => ({
   type: types.CAPABILITIES,
+})
+
+export const updatePath = (path) => ({
+  type: types.UPDATE_PATH,
+  payload: path
 })
 
 export default getRandom;

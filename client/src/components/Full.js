@@ -1,9 +1,8 @@
-import { CustomInput, Card, CardBody, CardTitle, CardSubtitle, CardText, CardLink, Container, Row, Col, Form, FormGroup, Label, FormFeedback, Input, Button, Modal, ModalHeader, ModalBody, CardHeader } from 'reactstrap'
-import { useState } from 'react'
-import { useFormik, Field, Formik } from 'formik'
-import * as Yup from 'yup'
-import Output from './Output'
+import { Card, CardBody, CardTitle, CardText, Row, Col, Button } from 'reactstrap'
+import { Field, Formik } from 'formik'
 import { connect } from 'react-redux'
+import { Navigate } from "react-router-dom";
+
 
 const Full = props => {
 
@@ -51,49 +50,62 @@ const Full = props => {
         );
       }
 
-    return (
+    const Form = (
         <Formik
-      initialValues={{ name: '',
-      votes: [] }}
-      onSubmit={values => onPostFull(values)}
-    >
-      {formik => (
+        initialValues={{ name: '',
+        votes: [] }}
+        onSubmit={values => {
+          onPostFull(values)
+        }}
+        
+      >
+        {formik => (
+          <div>
+              <Card
+                  body
+                  color="dark"
+                  outline
+              >
+                  <CardBody>
+                      <CardTitle tag="h5">
+                          {taco.name}
+                      </CardTitle>
+                      <CardText>
+                          {taco.html}
+                      </CardText>
+                  </CardBody>
+              </Card>
+                  <Row>
+                      <Col xs='6'>
+                          <Checkbox name="votes" value="false" />
+                      </Col>
+                      <Col xs='6'>
+                          <Checkbox name="votes" value="true" />   
+                      </Col>
+                  </Row>
+                  <div className='spacer'>
+                      <Row>
+                          <Button type='submit' style={{width: '100%'}} className='btn-success'>Submit</Button>
+                      </Row>
+                  </div>
+                  <div className='spacer'>
+                      <Row>
+                          {error ? <span className='invalid-feedback'>{ error.message }</span> : <span>&nbsp;</span>}
+                      </Row>
+                  </div>
+          </div>
+        )}
+      </Formik>
+    )
+
+    return (
         <div>
-            <Card
-                body
-                color="dark"
-                outline
-            >
-                <CardBody>
-                    <CardTitle tag="h5">
-                        {taco.name}
-                    </CardTitle>
-                    <CardText>
-                        {taco.html}
-                    </CardText>
-                </CardBody>
-            </Card>
-                <Row>
-                    <Col xs='6'>
-                        <Checkbox name="votes" value="false" />
-                    </Col>
-                    <Col xs='6'>
-                        <Checkbox name="votes" value="true" />   
-                    </Col>
-                </Row>
-                <div className='spacer'>
-                    <Row>
-                        <Button type='submit' style={{width: '100%'}} className='btn-success'>Submit</Button>
-                    </Row>
-                </div>
-                <div className='spacer'>
-                    <Row>
-                        {error ? <span className='invalid-feedback'>{ error.message }</span> : <span>&nbsp;</span>}
-                    </Row>
-                </div>
+            {
+                fetching ? <Navigate to='/Taco' /> : Form
+
+            }
         </div>
-      )}
-    </Formik>
+       
     )
 }
 
@@ -107,7 +119,11 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
-      onPostFull: () => dispatch({ type: 'POST_FULL' })
+      onPostFull: (values) => {
+          dispatch({ type: 'POST_FULL', payload: values })
+          dispatch({ type: 'UPDATE_PATH', payload: 'Full' })
+        }
+
     };
   };
   

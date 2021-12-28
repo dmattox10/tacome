@@ -1,4 +1,4 @@
-import { CAPABILITIES, GET_RANDOM, GET_FULL, GET_COMPLETE, GET_CUSTOM, POST_FULL, POST_CUSTOM, API_CALL_SUCCESS, API_CALL_FAILURE,CAP_SUCCESS, CAP_FAILURE } from '../actions/types'
+import { CAPABILITIES, GET_RANDOM, GET_FULL, GET_COMPLETE, GET_CUSTOM, POST_FULL, POST_CUSTOM, API_CALL_SUCCESS, API_CALL_FAILURE,CAP_SUCCESS, CAP_FAILURE, UPDATE_PATH } from '../actions/types'
 // reducer with initial state
 const initialState = {
   fetching: true,
@@ -6,7 +6,7 @@ const initialState = {
   error: null,
   capabilities: null,
   currentPage: 'Random',
-  navLinks: ['Random', 'Custom', 'Full', 'Complete']
+  navLinks: ['Random', 'Custom'] // , 'Full', 'Complete'
 }
 
 export function tacoReducer(state = initialState, action) {
@@ -26,13 +26,15 @@ export function tacoReducer(state = initialState, action) {
     case POST_CUSTOM:
       return { ...state, fetching: true, error: action.error }
     case API_CALL_SUCCESS:
-      return { ...state, fetching: false, taco: action.taco }
+      return { ...state, fetching: false, taco: action.payload }
     case API_CALL_FAILURE:
       return { ...state, fetching: false, error: action.error }
     case CAP_SUCCESS:
       return { ...state, fetching: false, capabilities: action.capabilities }
     case CAP_FAILURE:
-      return { ...state, fetching: false, errror: action.error }
+      return { ...state, fetching: false, error: action.error }
+    case UPDATE_PATH:
+      return { ...state, currentPage: action.payload }
     default:
       return state
   }
