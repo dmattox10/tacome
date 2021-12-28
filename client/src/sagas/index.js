@@ -1,5 +1,6 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import axios from "axios"
+import { getCapabilities } from "../actions";
 
 const baseURL = process.env.REACT_APP_BASE_URL || 'https://tacotaco.danielmattox.com/taco'
 // const navigate = useNavigate()
@@ -12,6 +13,7 @@ export function* watcherSaga() {
   yield takeLatest('GET_COMPLETE', completeSaga)
   yield takeLatest('POST_CUSTOM', postCustomSaga)
   yield takeLatest('POST_FULL', postFullSaga)
+  yield takeLatest('CAPABILITIES', getCapSaga)
 }
 
 function fetchRandom() {
@@ -139,6 +141,24 @@ function* postCustomSaga(action) {// may need action as parameter
     // navigate('/Taco')
   } catch (error) {
     yield put ({ type: 'API_CALL_FAILURE', error })
+  }
+}
+
+function getCap() {
+  return axios({
+    method: 'get',
+    url: `${baseURL}/capabilities`
+  })
+}
+
+function* getCapSaga(action) {
+  try {
+    const response = yield call(getCap, action.data)
+    const capabilities = response.data.capabilities
+
+    yield put ({ type: 'CAP_SUCCESS', capabilities})
+  } catch (error)  {
+    yield put ({ type: 'CAP_FAILURE', error})
   }
 }
 

@@ -1,17 +1,5 @@
 import types from './types'
 
-const increment = () => ({
-  type: types.INCREMENT,
-});
-
-export const decrement = () => ({
-  type: types.DECREMENT,
-});
-
-export const incrementAsync = error => ({
-  type: types.INCREMENT_ASYNC,
-});
-
 const getRandom = () => ({
   type: types.GET_RANDOM,
 })
@@ -37,6 +25,10 @@ export const postFull = (data) => ({
 export const postCustom = (data) => ({
   type: types.POST_CUSTOM,
   data
+})
+
+export const getCapabilities = () => ({
+  type: types.CAPABILITIES,
 })
 
 export default getRandom;

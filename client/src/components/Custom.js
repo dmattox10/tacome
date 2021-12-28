@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 const Custom = props => {
 
-    const { onPostCustom, taco, error, fetching } = props
+    const { onPostCustom } = props
 
     const formik = useFormik({
         initialValues: {
@@ -14,15 +14,11 @@ const Custom = props => {
             condiments: 0,
             mixins: 0,
             seasonings: 0,
-            shells: 0,
-            name: '',
-            votes: []
+            shells: 0
         },
         validationSchema: Yup.object({
             baseLayers: Yup.number()
             .required('Please enter a number less than MAX'), // capabilities, numbers go here
-            name: Yup.string()
-            .required('Name your Taco!'),
             mixins: Yup.number()
             .required('Please enter a number less than MAX'),
             condiments: Yup.number()
@@ -38,50 +34,50 @@ const Custom = props => {
         }
     })
 
-    const nameField = (
-        <Row>
-            <FormGroup>
-                <Label for='name'>Name your Taco!&nbsp;<span className='required'>*</span></Label>
-                <Input
-                    id='name'
-                    name='name'
-                    type='name'
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.name}
-                    className={ !formik.errors.name ? 'form-control is-valid' : 'form-control is-invalid' }
-                />
-                { formik.errors.name ? <span className='invalid-feedback'>{ formik.errors.password }</span> : <span>&nbsp;</span>}
-            </FormGroup>
-        </Row>
-    )
+    // const nameField = (
+    //     <Row>
+    //         <FormGroup>
+    //             <Label for='name'>Name your Taco!&nbsp;<span className='required'>*</span></Label>
+    //             <Input
+    //                 id='name'
+    //                 name='name'
+    //                 type='name'
+    //                 onChange={formik.handleChange}
+    //                 onBlur={formik.handleBlur}
+    //                 value={formik.values.name}
+    //                 className={ !formik.errors.name ? 'form-control is-valid' : 'form-control is-invalid' }
+    //             />
+    //             { formik.errors.name ? <span className='invalid-feedback'>{ formik.errors.password }</span> : <span>&nbsp;</span>}
+    //         </FormGroup>
+    //     </Row>
+    // )
 
-    function Checkbox(props) {
-        return (
-          <Field name={props.name}>
-            {({ field, form }) => (
-              <label>
-                <input
-                  {...field}
-                  type="checkbox"
-                  checked={field.value.includes(props.value)}
-                  onChange={() => {
-                    const set = new Set(field.value);
-                    if (set.has(props.value)) {
-                      set.delete(props.value);
-                    } else {
-                      set.add(props.value);
-                    }
-                    field.onChange(field.name)(Array.from(set));
-                    form.setFieldTouched(field.name, true);
-                  }}
-                />
-                {props.value}
-              </label>
-            )}
-          </Field>
-        );
-      }
+    // function Checkbox(props) {
+    //     return (
+    //       <Field name={props.name}>
+    //         {({ field, form }) => (
+    //           <label>
+    //             <input
+    //               {...field}
+    //               type="checkbox"
+    //               checked={field.value.includes(props.value)}
+    //               onChange={() => {
+    //                 const set = new Set(field.value);
+    //                 if (set.has(props.value)) {
+    //                   set.delete(props.value);
+    //                 } else {
+    //                   set.add(props.value);
+    //                 }
+    //                 field.onChange(field.name)(Array.from(set));
+    //                 form.setFieldTouched(field.name, true);
+    //               }}
+    //             />
+    //             {props.value}
+    //           </label>
+    //         )}
+    //       </Field>
+    //     );
+    //   }
 
     return (
         <div className='spacer'>
@@ -161,36 +157,36 @@ const Custom = props => {
                         { formik.errors.condiments ? <span className='invalid-feedback'>{ formik.errors.condiments }</span> : <span>&nbsp;</span>}
                     </FormGroup>
                 </Row>
-                <Row>
+                {/* <Row>
                     <Col xs='6'>
                         <Checkbox name="votes" value="false" />
                     </Col>
                     <Col xs='6'>
                         <Checkbox name="votes" value="true" />   
                     </Col>
-                </Row>
+                </Row> */}
                 <div className='spacer'>
                     <Row>
                         <Button type='submit' style={{width: '100%'}} className='btn-success'>Submit</Button>
                     </Row>
                 </div>
-                <div className='spacer'>
+                {/* <div className='spacer'>
                     <Row>
                         {error ? <span className='invalid-feedback'>{ error.message }</span> : <span>&nbsp;</span>}
                     </Row>
-                </div>
+                </div> */}
             </Form>
         </div>
     )
 }
 
-const mapStateToProps = state => {
-    return {
-      fetching: state.fetching,
-      taco: state.taco,
-      error: state.error
-    };
-  };
+// const mapStateToProps = state => {
+//     return {
+//       fetching: state.fetching,
+//       taco: state.taco,
+//       error: state.error
+//     };
+//   };
   
   const mapDispatchToProps = dispatch => {
     return {
@@ -198,4 +194,4 @@ const mapStateToProps = state => {
     };
   };
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Custom);
+  export default connect( mapDispatchToProps)(Custom);
