@@ -17,7 +17,7 @@ const Component = props => {
                         {name}
                     </CardTitle>
                     <CardText>
-                        {html}
+                    <div dangerouslySetInnerHTML={{ __html: html }} />
                     </CardText>
                 </CardBody>
             </Card>

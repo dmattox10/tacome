@@ -8,10 +8,7 @@ const Output = props => {
         <div>
             {
                 Object.entries(taco).map(([key, value]) => {
-                    if (key !== 'fullTacos') {
-                        console.log(key, value)
                         return <Layer key={key[0]._id} layerKey={key} layerValue={value} />
-                    }
                 })
             }
         </div>
