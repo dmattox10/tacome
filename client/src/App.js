@@ -16,13 +16,13 @@ const App = props => {
   // const dispatch = useDispatch()
   // const navigate = useNavigate()
   // const taco = useSelector(state => state.taco)
-  const { fetching, taco, currentPage, navLinks, onRequestRandom, capabilities, onRequestCaps } = props
+  const { fetching, taco, currentPage, navLinks, onRequestRandom, capabilities, onRequestCaps, error } = props
   useEffect(() => {
     if (!capabilities) {
       onRequestCaps()
     }
-    if (taco) {
-      console.log(taco)
+    if (error) {
+      console.log(error)
     }
     // if (!taco) {
     //   onRequestRandom()

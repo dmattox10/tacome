@@ -4,11 +4,7 @@ import Taco from './Taco'
 
 const Random = props => {
 
-    const {
-        onRequestRandom,
-        fetching,
-        taco
-    } = props
+    const { onRequestRandom, fetching, taco } = props
 
     const GetRandom = (
         <Card
@@ -57,7 +53,7 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => {
     return {
       onRequestRandom: () => dispatch({ type: 'GET_RANDOM' }),
-      onRequestCaps: () => dispatch({ type: 'CAPABILITIES' })
+      onRequestCaps: () => dispatch({ type: 'CAPABILITIES' }),
     };
   };
   

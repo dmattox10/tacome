@@ -3,7 +3,7 @@ import Layer from './Layer'
 const Output = props => {
 
     const { taco } = props
-
+    
     return (
         <div>
             {
