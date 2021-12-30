@@ -8,6 +8,7 @@ import Loading from './Loading'
 import TacoName from './TacoName'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons'
+import ActionButton from './ActionButton'
 
 const Taco = props => {
 
@@ -116,8 +117,8 @@ const Taco = props => {
             <Output taco={taco} />    
             <Row>
                 <div className='center'>
-                    <ActionButton action={doDownvote} className={'dislike'} icon={'heartbroken'} />
-                    <ActionButton action={doUpvote} className={'like'} icon={'heart'} />
+                    <ActionButton onClick={doDownvote} className={'dislike'} icon={'heartbroken'} />
+                    <ActionButton onClick={doUpvote} className={'like'} icon={'heart'} />
                 </div>
             </Row>
             <div className='spacer'>
