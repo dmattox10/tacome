@@ -1,5 +1,5 @@
 import { Row, Col, FormGroup, Button, Label, Input, Form } from 'reactstrap'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Field, Formik, useFormik } from 'formik'
 import * as Yup from 'yup'
 import Output from './Output'
@@ -13,6 +13,9 @@ const Taco = props => {
 
     const { onPostCustom, taco, error, fetching, onGetRandom, random } = props
     
+    const [vote, updateVote] = useState(0)
+    const [active, updateActive] = useState(null)
+
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -24,9 +27,36 @@ const Taco = props => {
         // }),
         onSubmit: values => {
             // do something!
+            if (vote === 1) {
+                values.vote = true
+            } else if (vote === -1) {
+                values.vote = false
+            }
             onPostCustom(values)
         }
     })
+
+    const doUpvote = () => {
+        if (vote === 1) {
+            updateVote(0)
+            updateActive(null)
+        } else {
+            updateVote(1)
+            updateActive('like')
+        }
+        // change active class
+    }
+
+    const doDownvote = () => {
+        if (vote === -1) {
+            updateVote(0)
+            updateActive(null)
+        } else {
+            updateVote(-1)
+            updateActive('dislike')
+        }
+        // change active class
+    }
 
     // function Checkbox(props) {
     //     return (
@@ -85,24 +115,10 @@ const Taco = props => {
             </Row>   
             <Output taco={taco} />    
             <Row>
-            <div className="center">
-            <div className="like">
-            <FontAwesomeIcon icon={faHeart} />
-            <FontAwesomeIcon className='outer' icon={faCircle} />
-
-    {/* <i class="fa fa-heart"></i>
-    <i class="outer fa fa-circle-thin"></i> */}
-  </div>
-
-  <div className="dislike">
-  <FontAwesomeIcon icon={faHeartBroken} />
-            <FontAwesomeIcon className='outer' icon={faCircle} />
-    {/* <i class="fa fa-thumbs-down"></i>
-    <i class="outer fa fa-circle-thin"></i> */}
-  </div>
-
-  
-</div>
+                <div className='center'>
+                    <ActionButton action={doDownvote} className={'dislike'} icon={'heartbroken'} />
+                    <ActionButton action={doUpvote} className={'like'} icon={'heart'} />
+                </div>
             </Row>
             <div className='spacer'>
                 <Row>
